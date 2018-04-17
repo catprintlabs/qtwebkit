@@ -35,13 +35,13 @@ namespace WebCore {
 // print in IE and Camino. This lets them use fewer sheets than they
 // would otherwise, which is presumably why other browsers do this.
 // Wide pages will be scaled down more than this.
-const float printingMinimumShrinkFactor = 1.25f;
+const float printingMinimumShrinkFactor = 1.0f;
 
 // This number determines how small we are willing to reduce the page content
 // in order to accommodate the widest line. If the page would have to be
 // reduced smaller to make the widest line fit, we just clip instead (this
 // behavior matches MacIE and Mozilla, at least)
-const float printingMaximumShrinkFactor = 2;
+const float printingMaximumShrinkFactor = 1;
 
 PrintContext::PrintContext(Frame* frame)
     : m_frame(frame)
@@ -138,7 +138,7 @@ void PrintContext::computePageRectsWithPageSizeInternal(const FloatSize& pageSiz
     unsigned pageCount = ceilf((float)docLogicalHeight / pageLogicalHeight);
     for (unsigned i = 0; i < pageCount; ++i) {
         int pageLogicalTop = blockDirectionEnd > blockDirectionStart ?
-                                blockDirectionStart + i * pageLogicalHeight : 
+                                blockDirectionStart + i * pageLogicalHeight :
                                 blockDirectionStart - (i + 1) * pageLogicalHeight;
         if (allowInlineDirectionTiling) {
             for (int currentInlinePosition = inlineDirectionStart;
